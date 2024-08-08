@@ -30,6 +30,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="1dp"
         android:backgroundTint="#8158CA"
+        android:textColor="@color/white"
         android:text="Seleccionar Archivo"
         android:textColorLink="#673AB7" />
 
@@ -41,6 +42,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="1dp"
         android:backgroundTint="#8158CA"
+        android:textColor="@color/white"
         android:text="Subir Archivo" />
 
 </LinearLayout>
