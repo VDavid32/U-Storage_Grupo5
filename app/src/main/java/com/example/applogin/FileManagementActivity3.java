@@ -1,11 +1,16 @@
 package com.example.applogin;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.OpenableColumns;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -100,13 +105,32 @@ public class FileManagementActivity3 extends AppCompatActivity implements Archiv
 
         if (requestCode == REQUEST_CODE_PICK_FILE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             fileUri = data.getData();
+            String fileName = getFileName(fileUri);
+            TextView verseleccion = (TextView) findViewById(R.id.textViewSelectFile);
+            verseleccion.setText("Seleciono: "+fileName);
         }
+    }
+
+    @SuppressLint("Range")
+    private String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            try (Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            }
+        }
+        if (result == null) {
+            result = uri.getLastPathSegment();
+        }
+        return result;
     }
 
     private void uploadFile() {
         if (fileUri != null) {
             StorageReference storageRef = storage.getReference();
-            String fileName = fileUri.getLastPathSegment();
+            String fileName = getFileName(fileUri);
             //String userId = mAuth.getCurrentUser().getUid();
             StorageReference fileRef = storageRef.child("archivos/" + userId + "/" + fileName);
 

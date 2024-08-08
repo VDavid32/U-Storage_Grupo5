@@ -1,5 +1,6 @@
 package com.example.applogin;
 
+import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,8 +83,34 @@ public class ArchivoAdapter3 extends RecyclerView.Adapter<ArchivoAdapter3.ViewHo
 
 
     public void ver(String urlDescarga){
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlDescarga));
-        context.startActivity(intent);
+        //Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlDescarga));
+        //context.startActivity(intent);
+
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dialog_view_file);
+        dialog.setTitle("Vista Previa de Archivo");
+
+        // Obtener el WebView del diálogo
+        WebView webViewFile = dialog.findViewById(R.id.webViewFile);
+        webViewFile.getSettings().setJavaScriptEnabled(true);
+        WebSettings webSettings = webViewFile.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setUseWideViewPort(true);
+        webViewFile.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
+
+        // Cargar el URL en el WebView
+        webViewFile.loadUrl(urlDescarga);
+
+        // Mostrar el diálogo
+        dialog.show();
+
     }
 
     public void descargar(String urlDescarga) {

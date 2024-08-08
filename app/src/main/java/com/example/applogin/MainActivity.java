@@ -21,7 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button button;
+    Button button,btnfiles;
     FirebaseAuth auth;
     FirebaseFirestore db;
     TextView nameTextView, emailTextView;
@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         nameTextView = findViewById(R.id.nameTextView);
         emailTextView = findViewById(R.id.emailTextView);
+        btnfiles = (Button) findViewById(R.id.btnarchivoslist);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +50,14 @@ public class MainActivity extends AppCompatActivity {
                 auth.signOut();
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+        btnfiles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, FileManagementActivity3.class);
                 startActivity(intent);
             }
         });

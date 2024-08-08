@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#F8EEEC"
     android:padding="8dp">
 
 
@@ -17,6 +18,10 @@
             android:layout_width="70dp"
             android:layout_height="68dp"
             app:srcCompat="@drawable/logo" />
+
+        <Space
+            android:layout_width="13dp"
+            android:layout_height="match_parent"></Space>
 
     <LinearLayout
         android:layout_width="match_parent"
